@@ -95,6 +95,27 @@ char *trim_newline(char *s)
   return t;
 }
 
+/* goup: char -> char */
+/* Changes a character to uppercase, or the null character if not a character */
+char godown(char in)
+{
+  int final = (int)in;
+  if(final <= 90 && final >= 65){
+    return (char)(final + 32);
+  }
+  else 
+    return in;
+}
+
+void tolower_s(char *in)
+{
+  int len = strlen(in);
+  int i;
+  for(i = 0; i < len; i++){
+    in[i] = godown(in[i]);
+  }
+}
+
 /* dec_to_etc: (char *) (char *) int -> void */
 /* writes the prompt that actually drills the user */
 void dec_to_etc(char *ans, char *type, int dec_val)
@@ -105,6 +126,7 @@ void dec_to_etc(char *ans, char *type, int dec_val)
     fprintf(stdout, "Answer: ");
     fgets(new0, 1024, stdin);
     char *new = trim_newline(new0);
+    tolower_s(new);
     if(!strcmp("give", new)){
       fprintf(stdout, "\nThe correct response was: %s\n", ans);
       fprintf(stdout, "Press enter to continue.");
